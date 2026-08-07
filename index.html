@@ -7,7 +7,32 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <header class="app-header">
+        <h1 class="app-title">Books Library</h1>
+        <form id="search-form" class="search-form" novalidate>
+          <label class="visually-hidden" for="search-input">Search by title</label>
+          <input id="search-input" type="search" name="query" placeholder="Search by book title..." autocomplete="off" />
+          <button type="submit">Find</button>
+        </form>
+      </header>
+
+      <main class="app-main">
+        <section id="results-section" class="section">
+          <h2 class="section-title">Search results</h2>
+          <div id="results-container" class="cards-container"></div>
+        </section>
+
+        <section id="favorites-section" class="section">
+          <h2 class="section-title">Favorites</h2>
+          <div id="favorites-container" class="cards-container"></div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>Powered by the Open Library API</p>
+      </footer>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
