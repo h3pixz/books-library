@@ -1,0 +1,15 @@
+{
+  "name": "books-library",
+  "version": "1.0.0",
+  "description": "Simple book catalog app built with vanilla JS and the Open Library API — a learning project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
