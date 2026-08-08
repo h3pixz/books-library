@@ -1,5 +1,6 @@
 import { searchBooks } from '../api/openLibrary.js';
 import { createBookCard } from '../components/BookCard.js';
+import { loadFavorites, saveFavorites } from '../utils/favorites.js';
 
 const searchForm = document.querySelector('#search-form');
 const searchInput = document.querySelector('#search-input');
@@ -14,7 +15,11 @@ const STATUS_MESSAGES = {
 };
 
 let currentBooks = [];
-const favoriteIds = new Set();
+let favorites = loadFavorites();
+
+function isFavorite(id) {
+  return favorites.some((book) => book.id === id);
+}
 
 function setStatus(message, type = 'info') {
   clearStatus();
@@ -32,17 +37,19 @@ function renderBooks(books) {
   currentBooks = books;
   resultsContainer.textContent = '';
   for (const book of books) {
-    resultsContainer.appendChild(createBookCard(book, { isFavorite: favoriteIds.has(book.id) }));
+    resultsContainer.appendChild(createBookCard(book, { isFavorite: isFavorite(book.id) }));
   }
 }
 
 function handleFavoriteToggle(event) {
   const { book } = event.detail;
-  if (favoriteIds.has(book.id)) {
-    favoriteIds.delete(book.id);
+  const index = favorites.findIndex((favorite) => favorite.id === book.id);
+  if (index === -1) {
+    favorites.push(book);
   } else {
-    favoriteIds.add(book.id);
+    favorites.splice(index, 1);
   }
+  saveFavorites(favorites);
   renderBooks(currentBooks);
 }
 
