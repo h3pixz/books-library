@@ -8,6 +8,7 @@ export class ApiError extends Error {
   }
 }
 
+// the API returns a lot of fields we don't use, so map each doc to a clean shape
 function normalizeBook(doc) {
   return {
     id: String(doc.key),
@@ -18,6 +19,7 @@ function normalizeBook(doc) {
   };
 }
 
+// abort the request if the API is slow to respond, so the app doesn't hang
 async function fetchWithTimeout(resource, timeoutMs = 10000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);

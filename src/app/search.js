@@ -56,6 +56,7 @@ function renderFavorites() {
   }
 }
 
+// re-render both lists so the favorite button state stays consistent everywhere
 function handleFavoriteToggle(event) {
   const { book } = event.detail;
   toggleFavorite(favorites, book);

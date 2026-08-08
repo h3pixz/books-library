@@ -1,5 +1,6 @@
 const COVER_URL = (coverId) => `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
 
+// show a placeholder when the book has no cover or the image fails to load
 function createPlaceholder(title) {
   const placeholder = document.createElement('div');
   placeholder.className = 'book-card__cover book-card__cover--placeholder';
