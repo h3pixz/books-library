@@ -41,7 +41,9 @@ export function createBookCard(book, { isFavorite = false } = {}) {
 
   const favoriteButton = document.createElement('button');
   favoriteButton.type = 'button';
-  favoriteButton.className = 'book-card__favorite';
+  favoriteButton.className = isFavorite
+    ? 'book-card__favorite book-card__favorite--active'
+    : 'book-card__favorite';
   favoriteButton.textContent = isFavorite ? 'Remove from favorites' : 'Add to favorites';
   favoriteButton.addEventListener('click', () => {
     card.dispatchEvent(

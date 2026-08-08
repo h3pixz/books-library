@@ -10,6 +10,7 @@
     <div id="app">
       <header class="app-header">
         <h1 class="app-title">Books Library</h1>
+        <p class="app-tagline">Search books by title and save your favorites.</p>
         <form id="search-form" class="search-form" novalidate>
           <label class="visually-hidden" for="search-input">Search by title</label>
           <input id="search-input" type="search" name="query" placeholder="Search by book title..." autocomplete="off" />
@@ -23,7 +24,7 @@
           <div id="results-container" class="cards-container"></div>
         </section>
 
-        <section id="favorites-section" class="section">
+        <section id="favorites-section" class="section section--favorites">
           <h2 class="section-title">Favorites</h2>
           <div id="favorites-container" class="cards-container"></div>
         </section>
