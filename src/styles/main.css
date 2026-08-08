@@ -120,6 +120,10 @@ body {
   cursor: pointer;
 }
 
+.favorites-empty {
+  color: #777;
+}
+
 .app-footer {
   padding: 1.5rem;
   text-align: center;

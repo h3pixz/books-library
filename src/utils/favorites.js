@@ -17,3 +17,17 @@ export function saveFavorites(books) {
     return;
   }
 }
+
+export function isFavorite(favorites, id) {
+  return favorites.some((book) => book.id === id);
+}
+
+export function toggleFavorite(favorites, book) {
+  const index = favorites.findIndex((favorite) => favorite.id === book.id);
+  if (index === -1) {
+    favorites.push(book);
+  } else {
+    favorites.splice(index, 1);
+  }
+  return favorites;
+}
