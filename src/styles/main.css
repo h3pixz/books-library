@@ -57,6 +57,35 @@ body {
   padding: 0.5rem 0.75rem;
 }
 
+.status {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.status--error {
+  background: #fdecea;
+  color: #b00020;
+}
+
+.book-card {
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.book-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.book-card__author {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
 .app-footer {
   padding: 1.5rem;
   text-align: center;
