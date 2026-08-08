@@ -7,6 +7,7 @@ const searchInput = document.querySelector('#search-input');
 const resultsSection = document.querySelector('#results-section');
 const resultsContainer = document.querySelector('#results-container');
 const favoritesContainer = document.querySelector('#favorites-container');
+const authorFilter = document.querySelector('#author-filter');
 
 const STATUS_MESSAGES = {
   emptyInput: 'Enter a book title to search.',
@@ -34,10 +35,30 @@ function clearStatus() {
   resultsSection.querySelector('.status')?.remove();
 }
 
+function populateAuthorFilter(books) {
+  const authors = [...new Set(books.flatMap((book) => book.authors))]
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b));
+  authorFilter.textContent = '';
+  const allOption = document.createElement('option');
+  allOption.value = '';
+  allOption.textContent = 'All authors';
+  authorFilter.appendChild(allOption);
+  for (const author of authors) {
+    const option = document.createElement('option');
+    option.value = author;
+    option.textContent = author;
+    authorFilter.appendChild(option);
+  }
+  authorFilter.hidden = authors.length < 2;
+}
+
 function renderBooks(books) {
   currentBooks = books;
+  const selected = authorFilter.value;
+  const visible = selected ? books.filter((book) => book.authors.includes(selected)) : books;
   resultsContainer.textContent = '';
-  for (const book of books) {
+  for (const book of visible) {
     resultsContainer.appendChild(createBookCard(book, { isFavorite: isFavoriteId(book.id) }));
   }
 }
@@ -70,6 +91,7 @@ async function handleSearch(event) {
   const query = searchInput.value;
   if (!query.trim()) {
     setStatus(STATUS_MESSAGES.emptyInput, 'error');
+    authorFilter.hidden = true;
     resultsContainer.textContent = '';
     return;
   }
@@ -79,14 +101,17 @@ async function handleSearch(event) {
     const books = await searchBooks(query);
     if (books.length === 0) {
       setStatus(STATUS_MESSAGES.emptyResult, 'empty');
+      authorFilter.hidden = true;
       resultsContainer.textContent = '';
       return;
     }
     clearStatus();
+    populateAuthorFilter(books);
     renderBooks(books);
   } catch (error) {
     console.error(error);
     setStatus(STATUS_MESSAGES.error, 'error');
+    authorFilter.hidden = true;
     resultsContainer.textContent = '';
   }
 }
@@ -94,5 +119,6 @@ async function handleSearch(event) {
 searchForm.addEventListener('submit', handleSearch);
 resultsContainer.addEventListener('favorite:toggle', handleFavoriteToggle);
 favoritesContainer.addEventListener('favorite:toggle', handleFavoriteToggle);
+authorFilter.addEventListener('change', () => renderBooks(currentBooks));
 
 renderFavorites();
