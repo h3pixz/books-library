@@ -1,4 +1,5 @@
 import { searchBooks } from '../api/openLibrary.js';
+import { createBookCard } from '../components/BookCard.js';
 
 const searchForm = document.querySelector('#search-form');
 const searchInput = document.querySelector('#search-input');
@@ -11,6 +12,9 @@ const STATUS_MESSAGES = {
   emptyResult: 'Nothing found. Try a different query.',
   error: 'Something went wrong. Check your connection and try again.',
 };
+
+let currentBooks = [];
+const favoriteIds = new Set();
 
 function setStatus(message, type = 'info') {
   clearStatus();
@@ -25,22 +29,21 @@ function clearStatus() {
 }
 
 function renderBooks(books) {
+  currentBooks = books;
   resultsContainer.textContent = '';
   for (const book of books) {
-    const card = document.createElement('article');
-    card.className = 'book-card';
-
-    const title = document.createElement('h3');
-    title.className = 'book-card__title';
-    title.textContent = book.title;
-
-    const author = document.createElement('p');
-    author.className = 'book-card__author';
-    author.textContent = book.authors[0] || 'Unknown author';
-
-    card.append(title, author);
-    resultsContainer.appendChild(card);
+    resultsContainer.appendChild(createBookCard(book, { isFavorite: favoriteIds.has(book.id) }));
   }
+}
+
+function handleFavoriteToggle(event) {
+  const { book } = event.detail;
+  if (favoriteIds.has(book.id)) {
+    favoriteIds.delete(book.id);
+  } else {
+    favoriteIds.add(book.id);
+  }
+  renderBooks(currentBooks);
 }
 
 async function handleSearch(event) {
@@ -70,3 +73,4 @@ async function handleSearch(event) {
 }
 
 searchForm.addEventListener('submit', handleSearch);
+resultsContainer.addEventListener('favorite:toggle', handleFavoriteToggle);
