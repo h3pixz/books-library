@@ -9,10 +9,13 @@ This project was built as a learning exercise. The full original specification (
 ## Features
 
 - Search books by title via the Open Library API (`search.json`)
+- Live search as you type (debounced), no need to press the search button
+- Filter search results by author
 - Result cards with cover (or a placeholder fallback), title, author and first publish year
 - "Add to favorites" / "Remove from favorites" toggle on every card
 - Favorites stored in `localStorage` and restored on reload
 - Dedicated favorites section with removal
+- Light/dark theme toggle, with the choice saved in `localStorage`
 - Loading, empty-result and network-error states
 - Responsive layout for desktop and mobile
 
@@ -79,7 +82,8 @@ Serves the contents of `dist/` locally so you can check the built app.
     ├── api/
     │   └── openLibrary.js  # Open Library client: fetch, normalize, errors
     ├── app/
-    │   └── search.js       # search flow, statuses, favorites rendering
+    │   ├── search.js       # search flow, author filter, favorites rendering
+    │   └── theme.js        # light/dark theme toggle and persistence
     ├── components/
     │   └── BookCard.js     # book card component (cover, meta, favorite button)
     ├── utils/
