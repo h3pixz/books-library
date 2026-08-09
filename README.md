@@ -2,6 +2,10 @@
 
 A simple book catalog app built with vanilla HTML, CSS and JavaScript (ES6+). It searches books by title through the [Open Library API](https://openlibrary.org/), shows results as cards, and lets you save books to favorites with persistence in `localStorage`. No frameworks or libraries — only [Vite](https://vitejs.dev/) as the build tool.
 
+## Deploy
+
+**https://books-library-cyan.vercel.app/**
+
 ## Task
 
 This project was built as a learning exercise. The full original specification (in Russian) is available here: **https://drive.google.com/file/d/1RBRcuH-_oAvtjem5Xs0c4NXZ8I38aYyH/view**.
