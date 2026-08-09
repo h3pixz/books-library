@@ -63,6 +63,12 @@ body {
   color: var(--color-text-muted);
 }
 
+.search-hint {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
 .theme-toggle {
   margin-bottom: 1.25rem;
 }

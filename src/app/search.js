@@ -18,6 +18,7 @@ const STATUS_MESSAGES = {
 
 let currentBooks = [];
 let favorites = loadFavorites();
+let searchTimer;
 
 function isFavoriteId(id) {
   return isFavorite(favorites, id);
@@ -86,9 +87,15 @@ function handleFavoriteToggle(event) {
   renderFavorites();
 }
 
-async function handleSearch(event) {
-  event.preventDefault();
-  const query = searchInput.value;
+// Debounce input so a query is only sent after the user pauses typing.
+function debounce(callback, delay = 400) {
+  return (...args) => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => callback(...args), delay);
+  };
+}
+
+async function handleSearch(query) {
   if (!query.trim()) {
     setStatus(STATUS_MESSAGES.emptyInput, 'error');
     authorFilter.hidden = true;
@@ -116,7 +123,14 @@ async function handleSearch(event) {
   }
 }
 
-searchForm.addEventListener('submit', handleSearch);
+const debouncedSearch = debounce(handleSearch);
+
+searchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  clearTimeout(searchTimer);
+  handleSearch(searchInput.value);
+});
+searchInput.addEventListener('input', (event) => debouncedSearch(event.target.value));
 resultsContainer.addEventListener('favorite:toggle', handleFavoriteToggle);
 favoritesContainer.addEventListener('favorite:toggle', handleFavoriteToggle);
 authorFilter.addEventListener('change', () => renderBooks(currentBooks));
